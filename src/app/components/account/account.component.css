@@ -1,0 +1,21 @@
+.full-width {
+  width: 90%;
+}
+
+.account-card {
+  min-width: 120px;
+  max-width: 800px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+}
+
+.col:last-child {
+  margin-right: 0;
+}

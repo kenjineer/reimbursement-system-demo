@@ -1,0 +1,38 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>RTS PH</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="['/api/v1/dashboard']" routerLinkActive="list-item-active">
+        <mat-icon>dashboard</mat-icon>Dashboard
+      </a>
+      <a mat-list-item [routerLink]="['/api/v1/reimbursements']" routerLinkActive="list-item-active">
+        <mat-icon>account_balance</mat-icon>Reimbursements
+      </a>
+      <a mat-list-item [routerLink]="['/api/v1/account']" routerLinkActive="list-item-active">
+        <mat-icon>account_circle</mat-icon>Account
+      </a>
+      <a mat-list-item [routerLink]="['/api/v1/manage']" routerLinkActive="list-item-active"
+        *ngIf="getAuthority() === '1'">
+        <mat-icon>supervisor_account</mat-icon>Manage
+      </a>
+      <a mat-list-item [routerLink]="['/api/v1/finance']" routerLinkActive="list-item-active"
+        *ngIf="getAuthority() === '2'">
+        <mat-icon>analytics</mat-icon>Finance
+      </a>
+      <a mat-list-item (click)="doLogout()" routerLinkActive="list-item-active">
+        <mat-icon>power_settings_new</mat-icon>Logout
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <h1 class="nav-name">{{activeRouteTitle()}}</h1>
+    </mat-toolbar>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

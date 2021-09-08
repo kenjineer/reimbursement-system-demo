@@ -1,0 +1,18 @@
+#chart {
+  max-width: 450px;
+  margin: 35px auto;
+  padding: 0;
+}
+
+.no-data {
+  background-color: #f7f7f7;
+  border: none;
+  box-shadow: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 360px;
+  width: 100%;
+  font: 400 24px/32px Roboto, "Helvetica Neue", sans-serif;
+  letter-spacing: normal;
+}

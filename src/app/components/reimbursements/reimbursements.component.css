@@ -1,0 +1,45 @@
+.full-width-table {
+  width: 100%;
+}
+
+tr.hover-row:hover {
+  background: whitesmoke;
+}
+
+tr.hover-row:active {
+  background: #efefef;
+}
+
+.floating-btn {
+  position: fixed;
+  bottom: 5vh;
+  right: 5vw;
+}
+
+.rmb-id-col {
+  width: 4%;
+}
+
+.emp-name-col {
+  width: 20%;
+}
+
+.category-col {
+  width: 10%;
+}
+
+.purpose-col {
+  width: 20%;
+}
+
+.total-cost-col {
+  width: 8%;
+}
+
+.status-col {
+  width: 8%;
+}
+
+.application-date-col {
+  width: 8%;
+}

@@ -1,0 +1,10 @@
+.full-width-table {
+  width: 100%;
+}
+
+.table-container {
+  margin-top: 10px;
+  max-height: 290px;
+  overflow: auto;
+  text-align: left;
+}

@@ -1,0 +1,202 @@
+<button mat-icon-button class="close-button" (click)="onCloseClick()">
+    <mat-icon>close</mat-icon>
+</button>
+<h1 mat-dialog-title *ngIf="!isAddReimbursement">Reimbursement ID: {{reimbursementData._reimbursementId}}
+</h1>
+<h1 mat-dialog-title *ngIf="isAddReimbursement">New Reimbursement</h1>
+<div mat-dialog-content>
+    <h2 *ngIf="!isAddReimbursement && reimbursementFormGroup.controls['status']?.value === 1 && authLevel === 0">
+        <mat-slide-toggle [(ngModel)]="isEditReimbursement" (change)="toggleEdit()">Edit
+        </mat-slide-toggle>
+    </h2>
+    <!-- Category Field -->
+    <mat-form-field appearance="fill" [formGroup]="reimbursementFormGroup">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="_categoryId" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let category of categories" [value]="category._categoryId">
+                {{category.categoryName}}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="reimbursementFormGroup.controls['_categoryId'].hasError('required')">Please choose a
+            <strong>category</strong>
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Purpose Field -->
+    <mat-form-field appearance="fill" [formGroup]="reimbursementFormGroup">
+        <mat-label>Purpose</mat-label>
+        <input matInput formControlName="purpose" required>
+        <mat-error *ngIf="reimbursementFormGroup.controls['purpose'].hasError('required')">Please provide a
+            <strong>purpose</strong>
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Planned Date Field -->
+    <mat-form-field appearance="fill" [formGroup]="reimbursementFormGroup">
+        <mat-label>Planned Date</mat-label>
+        <input matInput formControlName="plannedDate" [matDatepicker]="plannedDatePicker" [min]="minDate"
+            placeholder="yyyy/MM/dd" required>
+        <mat-datepicker-toggle matSuffix [for]="plannedDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #plannedDatePicker></mat-datepicker>
+        <mat-error *ngIf="reimbursementFormGroup.controls['plannedDate'].hasError('required')">Please provide a
+            <strong>planned date</strong>
+        </mat-error>
+        <mat-error *ngIf="reimbursementFormGroup.controls['plannedDate'].hasError('matDatepickerMin')">Cannot input date
+            earlier than
+            <strong>today</strong>
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Reimbursement Items -->
+    <div class="grid-container">
+        <mat-grid-list cols="1" rowHeight="150px" *ngIf="itemData.length > 0">
+            <mat-grid-tile *ngFor="let item of itemData; let i = index">
+                <mat-card class="item-card">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <div *ngIf="item._itemId">
+                                Item ID: {{item._itemId}}
+                            </div>
+                            <div *ngIf="!item._itemId">
+                                New Item
+                            </div>
+                            <button mat-icon-button class="delete-button"
+                                *ngIf="(isEditReimbursement || isAddReimbursement) && itemData.length > 1"
+                                (click)="deleteItemClick(item, i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="item-card-content">
+
+                        <!-- Item Name Field -->
+                        <mat-form-field appearance="fill" [formGroup]="itemFormGroup[i]">
+                            <mat-label>Item Name</mat-label>
+                            <input matInput formControlName="item" required>
+                            <mat-error *ngIf="itemFormGroup[i].controls['item'].hasError('required')">Please provide an
+                                <strong>item name</strong>
+                            </mat-error>
+                        </mat-form-field>
+
+                        <!-- Quantity Field -->
+                        <mat-form-field appearance="fill" [formGroup]="itemFormGroup[i]">
+                            <mat-label>Quantity</mat-label>
+                            <input matInput formControlName="qty" required type="number" min="0"
+                                (change)="computeTotal()">
+                            <mat-error *ngIf="itemFormGroup[i].controls['qty'].hasError('required')">Please provide
+                                a
+                                <strong>quantity</strong>
+                            </mat-error>
+                        </mat-form-field>
+
+                        <!-- Cost Field -->
+                        <mat-form-field appearance="fill" [formGroup]="itemFormGroup[i]">
+                            <mat-label>Cost</mat-label>
+                            <input matInput formControlName="cost" required type="number" step=".01" min="0.00"
+                                (focusout)="formatMoney($event, i)" (change)="computeTotal()">
+                            <mat-error *ngIf="itemFormGroup[i].controls['cost'].hasError('required')">Please provide a
+                                <strong>cost</strong>
+                            </mat-error>
+                        </mat-form-field>
+
+                    </mat-card-content>
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <button mat-raised-button (click)="addItemClick()" *ngIf="isEditReimbursement || isAddReimbursement">Add
+            Item</button>
+    </div>
+
+    <!-- Total Cost Field -->
+    <mat-form-field appearance="fill" [formGroup]="reimbursementFormGroup">
+        <mat-label>Total Cost</mat-label>
+        <input matInput formControlName="totalCost" required>
+        <mat-error *ngIf="reimbursementFormGroup.controls['totalCost'].hasError('required')">Please add an
+            <strong>item</strong> to calculate
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Application Date Field -->
+    <mat-form-field appearance="fill" [formGroup]="reimbursementFormGroup"
+        *ngIf="!isAddReimbursement && reimbursementData.status >= 1">
+        <mat-label>Application Date</mat-label>
+        <input matInput formControlName="createdDate" [matDatepicker]="createdDatePicker" [min]="minDate" required>
+        <mat-datepicker-toggle matSuffix [for]="createdDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #createdDatePicker></mat-datepicker>
+        <mat-error *ngIf="reimbursementFormGroup.controls['createdDate'].hasError('matDatepickerMin')">Cannot input
+            date
+            earlier than
+            <strong>today</strong>
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Approval Date Field -->
+    <mat-form-field appearance="fill" [formGroup]="reimbursementFormGroup"
+        *ngIf="!isAddReimbursement && reimbursementData.status >= 2">
+        <mat-label>Approval Date</mat-label>
+        <input matInput formControlName="approvalDate" [matDatepicker]="approvalDatePicker" required>
+        <mat-datepicker-toggle matSuffix [for]="approvalDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #approvalDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Rejected Date Field -->
+    <mat-form-field appearance="fill" [formGroup]="reimbursementFormGroup"
+        *ngIf="!isAddReimbursement && reimbursementData.status === 0">
+        <mat-label>Rejected Date</mat-label>
+        <input matInput formControlName="rejectionDate" [matDatepicker]="rejectionDatePicker" required>
+        <mat-datepicker-toggle matSuffix [for]="rejectionDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #rejectionDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Release Date Field -->
+    <mat-form-field appearance="fill" [formGroup]="reimbursementFormGroup"
+        *ngIf="!isAddReimbursement && reimbursementData.status === 3">
+        <mat-label>Release Date</mat-label>
+        <input matInput formControlName="releaseDate" [matDatepicker]="releaseDatePicker" required>
+        <mat-datepicker-toggle matSuffix [for]="releaseDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #releaseDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Remarks Field -->
+    <mat-form-field appearance="fill" [formGroup]="reimbursementFormGroup" class="remarks-field">
+        <mat-label>Remarks</mat-label>
+        <textarea matInput formControlName="remarks" class="remarks"></textarea>
+    </mat-form-field>
+
+    <!-- Upload Receipt -->
+    <div>
+        <div class="container-img" *ngFor="let imgURL of imageURLs; let i = index">
+            <img class="rct-img" [src]="imgURL" height="200">
+            <button mat-raised-button [ngClass]="isEditReimbursement || isAddReimbursement ? 'btn-img-edit' : 'btn-img'"
+                (click)="openImageDialogClick(imgURL)">
+                <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-raised-button class="btn-img-edit" color="warn"
+                *ngIf="isEditReimbursement || isAddReimbursement" (click)="deleteImageClick(imgURL, i)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <input class="file-input" type="file" accept="image/*" multiple #fileInput
+        (change)="previewReceipt(fileInput.files, true)">
+    <button mat-raised-button class="upload-btn" (click)="fileInput.value=''; fileInput.click()"
+        *ngIf="isEditReimbursement || isAddReimbursement">Upload
+        Receipt</button>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button type="submit" color="primary" (click)="onAddClick()" *ngIf="isAddReimbursement">Add
+    </button>
+    <button mat-raised-button type="submit" color="primary" (click)="onSaveClick()"
+        *ngIf="!isAddReimbursement && isEditReimbursement">Save</button>
+    <button mat-raised-button color="warn" (click)="onCancelClick()"
+        *ngIf="!isAddReimbursement && isEditReimbursement">Cancel Request</button>
+    <button mat-raised-button color="primary" (click)="onApproveClick()"
+        *ngIf="reimbursementFormGroup.controls['status']?.value === 1 && authLevel === 1">Approve</button>
+    <button mat-raised-button color="warn" (click)="onRejectClick()"
+        *ngIf="reimbursementFormGroup.controls['status']?.value === 1 && authLevel === 1">Reject</button>
+    <button mat-raised-button color="primary" (click)="onReleaseClick()"
+        *ngIf="reimbursementFormGroup.controls['status']?.value === 2 && authLevel === 2">Release</button>
+</div>

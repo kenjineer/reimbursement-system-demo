@@ -1,0 +1,106 @@
+.grid-container {
+  margin: 20px;
+}
+
+.item-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.delete-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.item-card-content {
+  text-align: left;
+}
+
+.close-button {
+  float: right;
+  top: -24px;
+  right: -24px;
+}
+
+.mat-dialog-content {
+  height: calc(100% - 96px);
+  max-height: unset;
+}
+
+.mat-form-field {
+  margin-left: 0.5rem;
+}
+
+.remarks-field {
+  width: 100%;
+}
+
+.remarks {
+  height: 100px;
+}
+
+.container-imgs {
+  display: inline-block;
+}
+
+.container-img {
+  display: inline-block;
+  position: relative;
+  margin-right: 20px;
+  width: 200px;
+  height: 200px;
+}
+
+.container-img .btn-img {
+  position: relative;
+  top: -60%;
+  left: 33%;
+  margin-right: 10px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.container-img:hover .btn-img {
+  opacity: 1;
+}
+
+.container-img .btn-img-edit {
+  position: relative;
+  top: -60%;
+  left: 15%;
+  margin-right: 10px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.container-img:hover .btn-img-edit {
+  opacity: 1;
+}
+
+.rct-img {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.container-img:hover .rct-img {
+  opacity: 0.7;
+}
+
+.file-input {
+  display: none;
+}
+
+.upload-btn {
+  margin-bottom: 0.5rem;
+}

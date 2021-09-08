@@ -1,0 +1,7 @@
+<div id="chart" *ngIf="!isEmpty()">
+    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [labels]="chartOptions.labels"
+        [responsive]="chartOptions.responsive"></apx-chart>
+</div>
+<div class="no-data" *ngIf="isEmpty()">
+    No Data
+</div>

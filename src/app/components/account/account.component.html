@@ -1,0 +1,170 @@
+<form [formGroup]="accountForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="account-card">
+    <mat-card-header>
+      <mat-card-title>Employee Info</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Employee ID" formControlName="_employeeId">
+            <mat-error *ngIf="accountForm.controls['_employeeId'].hasError('required')">
+              Employee ID is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Development Group" formControlName="devName">
+            <mat-error *ngIf="accountForm.controls['devName'].hasError('required')">
+              Development Group is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Office Location" formControlName="officeCode">
+            <mat-error *ngIf="accountForm.controls['officeCode'].hasError('required')">
+              Office Location is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Current Job Title" formControlName="positionName">
+            <mat-error *ngIf="accountForm.controls['positionName'].hasError('required')">
+              Current Job Title is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Nickname" formControlName="nickname">
+            <mat-error *ngIf="accountForm.controls['nickname'].hasError('required')">
+              Nickname is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="First Name" formControlName="firstname">
+            <mat-error *ngIf="accountForm.controls['firstname'].hasError('required')">
+              First Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Middle Name" formControlName="middlename">
+            <mat-error *ngIf="accountForm.controls['middlename'].hasError('required')">
+              Middle Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Last Name" formControlName="lastname">
+            <mat-error *ngIf="accountForm.controls['lastname'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Suffix" formControlName="suffix">
+            <mat-error *ngIf="accountForm.controls['suffix'].hasError('required')">
+              Suffix is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Username" formControlName="username">
+            <mat-error *ngIf="accountForm.controls['username'].hasError('required')">
+              Username is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="New Password" formControlName="password" type="password">
+            <mat-error *ngIf="accountForm.controls['password'].hasError('minlength')">
+              Password is <strong>below minimum (6)</strong> number of characters
+            </mat-error>
+            <mat-error *ngIf="accountForm.controls['password'].hasError('maxlength')">
+              Password is <strong>above maximum (16)</strong> number of characters
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Re-type New Password" formControlName="confirmPassword" type="password"
+              (change)="passwordMatchValidator()">
+            <mat-error *ngIf="!isPasswordMatch">
+              Password did <strong>not match</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Email" formControlName="email">
+            <mat-error *ngIf="accountForm.controls['email'].hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Gender" formControlName="gender">
+            <mat-error *ngIf="accountForm.controls['gender'].hasError('required')">
+              Gender is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Update</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
