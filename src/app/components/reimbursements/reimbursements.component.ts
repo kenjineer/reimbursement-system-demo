@@ -10,7 +10,7 @@ import {
   ReimbursementsItem,
 } from './reimbursements-datasource';
 import { MatDialog } from '@angular/material/dialog';
-import { ReimbursementDialogComponent } from '../reimbursements-items/reimbursement-dialog/reimbursement-dialog/reimbursement-dialog.component';
+import { ReimbursementDialogComponent } from '../reimbursements-items/reimbursement-dialog/reimbursement-dialog.component';
 import { Reimbursement } from 'src/app/models/reimbursement.model';
 import { ReusableDialogComponent } from '../reusable-dialog/reusable-dialog.component';
 import { LoginComponent } from '../login/login.component';

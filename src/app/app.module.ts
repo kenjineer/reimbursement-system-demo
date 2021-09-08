@@ -36,7 +36,7 @@ import { PendingTableComponent } from './components/dashboard-items/pending-tabl
 import { RecentTableComponent } from './components/dashboard-items/recent-table/recent-table.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { CategoryChartComponent } from './components/dashboard-items/category-chart/category-chart.component';
-import { ReimbursementDialogComponent } from './components/reimbursements-items/reimbursement-dialog/reimbursement-dialog/reimbursement-dialog.component';
+import { ReimbursementDialogComponent } from './components/reimbursements-items/reimbursement-dialog/reimbursement-dialog.component';
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
